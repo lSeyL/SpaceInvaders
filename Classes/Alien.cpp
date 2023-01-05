@@ -5,14 +5,16 @@
 #include "Alien.h"
 
 
-Alien::Alien() {
+Alien::Alien() : textureAlienFile("../Resources/alien.png") {
     textureAlien.loadFromFile(textureAlienFile);
     alien.setTexture(textureAlien);
 }
+/*
 Alien::Alien(sf::Texture& tex) {
     tex.loadFromFile(textureAlienFile);
     alien.setTexture(tex);
 }
+ */
 Alien::~Alien() {
 
 }

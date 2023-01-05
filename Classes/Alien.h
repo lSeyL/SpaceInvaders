@@ -20,7 +20,7 @@ private:
     sf::Texture textureAlien;
 public:
     Alien();
-    Alien(sf::Texture& tex);
+    //Alien(sf::Texture& tex);
     ~Alien();
     sf::Sprite getAlienSprite() {return alien;};
     sf::Texture getAlien() {return textureAlien;};

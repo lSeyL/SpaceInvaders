@@ -73,7 +73,7 @@ int main() {
             int offsetX = 79;
             int offsetY = 50;
             int medzera = 10;
-            Alien alien(textureAlien);
+            Alien alien;
             alien.setPosition(offsetX, offsetY, medzera, i, j);
             enemies.push_back(alien);
         }
