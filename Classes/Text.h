@@ -14,7 +14,7 @@
 class Text
 {
 public:
-    Text(const sf::Font& font, unsigned int characterSize, sf::Color color, bool bold);
+    Text(const std::string& str, const sf::Font& font, unsigned int characterSize, sf::Color color, bool bold);
 
     void setString(const std::string& str);
     void setPosition(float x, float y);
