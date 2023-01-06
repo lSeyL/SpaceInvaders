@@ -18,9 +18,10 @@ private:
     std::string textureAlienFile = "../Resources/alien.png";
     sf::Sprite alien;
     sf::Texture textureAlien;
+    bool alive;
 public:
     Alien();
-    //Alien(sf::Texture& tex);
+    explicit Alien(sf::Texture& tex);
     ~Alien();
     sf::Sprite getAlienSprite() {return alien;};
     sf::Texture getAlien() {return textureAlien;};
@@ -35,8 +36,10 @@ public:
     sf::FloatRect getLocalBounds();
     sf::Vector2f& getPosition();
     void vystrel(sf::Texture& tex, std::vector<Bullet> &alienBullets);
+    bool isAlive();
+    void setAliveState(bool setLive);
 
-    Alien(sf::Sprite sprite);
+
 };
 
 

@@ -5,16 +5,15 @@
 #include "Alien.h"
 
 
-Alien::Alien() : textureAlienFile("../Resources/alien.png") {
-    textureAlien.loadFromFile(textureAlienFile);
-    alien.setTexture(textureAlien);
+Alien::Alien() {
 }
-/*
+
 Alien::Alien(sf::Texture& tex) {
     tex.loadFromFile(textureAlienFile);
     alien.setTexture(tex);
+    alive = true;
 }
- */
+
 Alien::~Alien() {
 
 }
@@ -80,6 +79,16 @@ void Alien::vystrel(sf::Texture& tex, std::vector<Bullet> &alienBullets) {
         alienBullets.push_back(bullet);
     }
 }
+
+bool Alien::isAlive() {
+    return this->alive;
+}
+
+void Alien::setAliveState(bool setLive) {
+    this->alive = setLive;
+}
+
+
 
 
 
