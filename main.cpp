@@ -10,7 +10,7 @@
 const int SIRKA_OBRAZOVKY = 768;
 const int VYSKA_OBRAZOVKY = 672;
 const int CAS_MEDZI_STRELAMI = 650;
-const float ALIEN_POSUN = 100.f;
+const float ALIEN_POSUN = 10.f;
 const float ALIEN_POSUN_DOLE = 5.f;
 // 4:3
 
@@ -24,10 +24,12 @@ float zrychliPosun(float &x);
 //
 int main() {
     //
+
     sf::Mutex mutex;
     int player;
     std::cout << "Player(0) or player(1). " << std::endl;
     std::cin >> player;
+
 
 
     sf::IpAddress ipAddress = sf::IpAddress::getLocalAddress();
@@ -35,7 +37,8 @@ int main() {
     char buffer[1024];
     char connectionType;
     char mode;
-    bool enemyHit = false;
+    int pocetHracov = 0;
+
     //std::size_t enemyHit;
     std::cout << "Type (s) to host, or (c) to connect. " << std::endl;
     std::cin >> connectionType;
@@ -44,10 +47,12 @@ int main() {
         sf::TcpListener listener;
         listener.listen(51000);
         listener.accept(socket);
+        pocetHracov++;
         mode = 's';
     } else if (connectionType == 'c') {
         socket.connect(ipAddress, 51000);
         mode = 'r';
+        pocetHracov++;
     } else {
         std::cerr << "Error" << std::endl;
         return 1;
@@ -93,9 +98,14 @@ int main() {
     textureAlien.loadFromFile("../Resources/alien.png");
     sf::Texture textureShot;
     textureShot.loadFromFile("../Resources/shot.png");
+    std::vector<p::Player> players;
 
-    p::Player hrac;
-    hrac.nastavPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+    p::Player* hrac1 = new p::Player;
+    players.push_back(&hrac1);
+
+    for (p::Player& player : players) {
+        player.nastavPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+    }
 
     sf::Clock clock;
     std::chrono::time_point<std::chrono::steady_clock> lastShotTime = std::chrono::steady_clock::now();
@@ -111,8 +121,7 @@ int main() {
 
     int pocetRad = 10;
     int pocetStlpec = 3;
-    //Alien aliens[pocetRad][pocetStlpec];
-    std::vector<std::vector<Alien>> aliens(pocetRad, std::vector<Alien>(pocetStlpec));
+
     bool alienNazive[pocetRad][pocetStlpec];
     for (int i = 0; i < pocetRad; ++i) {
         for (int j = 0; j < pocetStlpec; ++j) {
@@ -123,12 +132,12 @@ int main() {
             int offsetX = 79;
             int offsetY = 50;
             int medzera = 10;
-            //Alien alien(textureAlien);
-            //Alien.setPosition(offsetX, offsetY, medzera, i, j);
-            //enemies.push_back(alien);
+            Alien alien(textureAlien);
+            alien.setPosition(offsetX, offsetY, medzera, i, j);
+            enemies.push_back(alien);
             //std::cout << alienNazive[i][j] << std::endl;
 
-            aliens[i][j] = Alien(textureAlien);
+
         }
     }
 
@@ -149,33 +158,33 @@ int main() {
         //Ovladanie
         if(player == 0) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                hrac.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
-                hrac.pohybVlavo();
+                hrac1.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+                hrac1.pohybVlavo();
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                hrac.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
-                hrac.pohybVpravo();
+                hrac1.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+                hrac1.pohybVpravo();
             }
 
             if (currentTime - lastShotTime > std::chrono::milliseconds(CAS_MEDZI_STRELAMI)) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                    hrac.vystrel(textureShot, bullets);
+                    hrac1.vystrel(textureShot, bullets);
                     lastShotTime = currentTime;
                 }
             }
         } else {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                hrac.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
-                hrac.pohybVlavo();
+                hrac1.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+                hrac1.pohybVlavo();
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                hrac.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
-                hrac.pohybVpravo();
+                hrac1.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+                hrac1.pohybVpravo();
             }
 
             if (currentTime - lastShotTime > std::chrono::milliseconds(CAS_MEDZI_STRELAMI)) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-                    hrac.vystrel(textureShot, bullets);
+                    hrac1.vystrel(textureShot, bullets);
                     lastShotTime = currentTime;
                 }
             }
@@ -200,16 +209,20 @@ int main() {
             return bullet.getPosition().y < 0;
         }), alienBullets.end());
         //
-        sf::Packet packetWEnemies;
-        sf::Packet packetKilledAliens;
-        int posHitEnemy;
-        unsigned int pocetEnem;
+        sf::Packet packetNumOfEnemies;
+        //f::Packet packetKilledPosition;
+        //f::Packet packetWasHit;
+
+        bool enemyHit = false;
+
         for (auto &bullet: bullets) {
             for (int i = 0; i < enemies.size(); i++) {
                 if (checkCollision(bullet.getSprite().getGlobalBounds(), enemies[i].getGlobalBounds())) {
+                    int posHitEnemy = 0;
                     posHitEnemy = i;
                     Alien hitAlien = enemies[i];
                     hitAlien.setAliveState(false);
+                    enemies[i].setAliveState(false);
                     //deadEnemies.push_back(hitAlien);
                     //std::cout << "Alien dead size: " << deadEnemies.size() << std::endl;
                     //enemies.erase(enemies.begin() + i);
@@ -219,9 +232,10 @@ int main() {
                     skoreString = "Skore: ";
                     skoreString += std::to_string(skoreHodnota);
                     enemyHit = true;
-                    pocetEnem = enemies.size();
-                    packetWEnemies << enemies.size();
-                    packetKilledAliens << posHitEnemy;
+                    //pocetEnem = enemies.size();
+                    packetNumOfEnemies << enemies.size() << posHitEnemy << enemyHit;
+                    //packetKilledPosition <<
+                    //packetWasHit << enemyHit;
 
 
 
@@ -231,40 +245,41 @@ int main() {
         }
 
         mutex.lock();
-        socket.send(packetWEnemies);
-        socket.send(packetKilledAliens);
+        //socket.send(packetKilledPosition);
+        socket.send(packetNumOfEnemies);
+        //socket.send(packetWasHit);
         mutex.unlock();
 
         mutex.lock();
-        socket.receive(packetWEnemies);
-        socket.receive(packetKilledAliens);
+        socket.receive(packetNumOfEnemies);
+        //socket.receive(packetKilledPosition);
+        //socket.receive(packetWasHit);
         mutex.unlock();
 
-        if(enemyHit)
-        {
-            packetKilledAliens >> posHitEnemy;
-            //enemies.erase(enemies.begin() + posHitEnemy);
-            enemyHit=false;
-        }
+        //packetWasHit >> enemyHit;
+        int pos;
+        unsigned int pocetEnem;
+        bool hit;
+        packetNumOfEnemies >> pocetEnem >> pos >> hit;
 
-        /*
-        if (mode == 's') {
-            //std::getline(std::cin, text);
-            //socket.send(packetKilledAliens);
-            socket.send(packetWEnemies);
-            mode = 'r';
-        } else if (mode == 'r') {
-            socket.receive(packetWEnemies);
-            //socket.receive(packetKilledAliens);
-            mode = 's';
+        if(hit)
+        {
+            //int posHitEnemy;
+            enemies.erase(enemies.begin() + pos);
+            hit=false;
         }
-         */
+        for (int i = 0; i < enemies.size(); ++i) {
+            if(!enemies[i].isAlive())
+            {
+                enemies.erase(enemies.begin() + i);
+            }
+        }
 
         for (auto &bullet: alienBullets) {
             for (int i = 0; i < enemies.size(); i++) {
-                if (checkCollision(bullet.getSprite().getGlobalBounds(), hrac.getSprite().getGlobalBounds())) {
-                    int pocetZivotov = hrac.getZivoty();
-                    hrac.nastavZivoty(pocetZivotov - 1);
+                if (checkCollision(bullet.getSprite().getGlobalBounds(), hrac1.getSprite().getGlobalBounds())) {
+                    int pocetZivotov = hrac1.getZivoty();
+                    hrac1.nastavZivoty(pocetZivotov - 1);
                     bullet = alienBullets.back();
                     alienBullets.pop_back();
                 }
@@ -272,7 +287,7 @@ int main() {
         }
 
         window.clear();
-        window.draw(hrac.getSprite());
+        window.draw(hrac1.getSprite());
 
         for (Alien &alien: enemies) {
             alien.pohyb(ALIEN_POSUN * enemyDirection * elapsedTime, 0.0f);
@@ -340,7 +355,7 @@ int main() {
             }
         }
 
-        if (hrac.getZivoty() <= 0) {
+        if (hrac1.getZivoty() <= 0) {
             std::cout << "Prehra\n";
             std::cout << "Stratil si vsetky zivoty.\n";
             bullets.clear();
@@ -353,11 +368,11 @@ int main() {
 
 
 
-        //packetKilledAliens >> posHitEnemy;
-        packetWEnemies >> pocetEnem;
+        //packetKilledPosition >> posHitEnemy;
+
 
         zivotyString = "Pocet zivotov: ";
-        zivotyString += std::to_string(hrac.getZivoty());
+        zivotyString += std::to_string(hrac1.getZivoty());
         pocetEnemiesString = "Enemies: ";
         pocetEnemiesString += std::to_string(pocetEnem);
         textZivoty.setString(zivotyString);
