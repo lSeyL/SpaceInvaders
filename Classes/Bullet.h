@@ -1,3 +1,6 @@
+//
+// Created by Richen7 on 4. 1. 2023.
+//
 #ifndef SPACEINVADERS_BULLET_H
 #define SPACEINVADERS_BULLET_H
 #pragma once

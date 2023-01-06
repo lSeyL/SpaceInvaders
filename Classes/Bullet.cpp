@@ -1,3 +1,6 @@
+//
+// Created by Richen7 on 4. 1. 2023.
+//
 #include "Bullet.h"
 
 Bullet::Bullet(const sf::Texture& texture) : sprite(texture) {}
