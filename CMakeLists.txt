@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.23)
 project(SpaceInvaders)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(SpaceInvaders main.cpp Classes/Player.cpp Classes/Player.h Classes/Alien.cpp Classes/Alien.h Classes/Bullet.cpp Classes/Bullet.h Classes/AlienArmy.cpp Classes/AlienArmy.h)
+add_executable(SpaceInvaders main.cpp Classes/Player.cpp Classes/Player.h Classes/Alien.cpp Classes/Alien.h Classes/Bullet.cpp Classes/Bullet.h Classes/AlienArmy.cpp Classes/AlienArmy.h Classes/Menu.cpp Classes/Menu.h Classes/MenuObraz.cpp Classes/MenuObraz.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)

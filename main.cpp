@@ -6,6 +6,7 @@
 #include "Classes/Bullet.h"
 #include "Classes/Player.h"
 #include "Classes/Alien.h"
+#include "Classes/MenuObraz.h"
 
 const int SIRKA_OBRAZOVKY = 768;
 const int VYSKA_OBRAZOVKY = 672;
@@ -24,6 +25,8 @@ float zrychliPosun(float &x);
 //
 int main() {
     //
+    MenuObraz menu;
+    menu.zobrazMenu();
     sf::Mutex mutex;
     int player;
     std::cout << "Player(0) or player(1). " << std::endl;
