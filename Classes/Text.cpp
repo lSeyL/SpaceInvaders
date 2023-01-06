@@ -2,6 +2,8 @@
 // Created by Richen on 6.1.2023.
 //
 
+//Trieda na vytváranie textu.
+
 #include "Text.h"
 
 Text::Text(const sf::Font& font, unsigned int characterSize, sf::Color color, bool bold)

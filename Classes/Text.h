@@ -2,6 +2,8 @@
 // Created by Richen on 6.1.2023.
 //
 
+//Header ku triede Text.cpp
+
 #ifndef SPACEINVADERS_TEXT_H
 #define SPACEINVADERS_TEXT_H
 
