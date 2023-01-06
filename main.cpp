@@ -24,6 +24,7 @@ float zrychliPosun(float &x);
 //
 int main() {
     //
+    sf::Mutex mutex;
     int player;
     std::cout << "Player(0) or player(1). " << std::endl;
     std::cin >> player;
@@ -34,7 +35,8 @@ int main() {
     char buffer[1024];
     char connectionType;
     char mode;
-    std::size_t received;
+    bool enemyHit = false;
+    //std::size_t enemyHit;
     std::cout << "Type (s) to host, or (c) to connect. " << std::endl;
     std::cin >> connectionType;
 
@@ -107,6 +109,7 @@ int main() {
 
     int pocetRad = 10;
     int pocetStlpec = 3;
+
     bool alienNazive[pocetRad][pocetStlpec];
     for (int i = 0; i < pocetRad; ++i) {
         for (int j = 0; j < pocetStlpec; ++j) {
@@ -193,24 +196,27 @@ int main() {
         }), alienBullets.end());
         //
         sf::Packet packetWEnemies;
+        sf::Packet packetKilledAliens;
+        int posHitEnemy;
+        unsigned int pocetEnem;
         for (auto &bullet: bullets) {
             for (int i = 0; i < enemies.size(); i++) {
                 if (checkCollision(bullet.getSprite().getGlobalBounds(), enemies[i].getGlobalBounds())) {
+                    posHitEnemy = i;
                     Alien hitAlien = enemies[i];
                     hitAlien.setAliveState(false);
                     deadEnemies.push_back(hitAlien);
                     std::cout << "Alien dead size: " << deadEnemies.size() << std::endl;
-
-                    enemies.erase(enemies.begin() + i);
+                    //enemies.erase(enemies.begin() + i);
                     bullet = bullets.back();
                     bullets.pop_back();
                     skoreHodnota += 300;
                     skoreString = "Skore: ";
                     skoreString += std::to_string(skoreHodnota);
-
+                    enemyHit = true;
+                    pocetEnem = enemies.size();
                     packetWEnemies << enemies.size();
-
-
+                    packetKilledAliens << posHitEnemy;
 
 
 
@@ -219,14 +225,35 @@ int main() {
             }
         }
 
+        mutex.lock();
+        socket.send(packetWEnemies);
+        socket.send(packetKilledAliens);
+        mutex.unlock();
+
+        mutex.lock();
+        socket.receive(packetWEnemies);
+        socket.receive(packetKilledAliens);
+        mutex.unlock();
+
+        if(enemyHit)
+        {
+            packetKilledAliens >> posHitEnemy;
+            enemies.erase(enemies.begin() + posHitEnemy);
+            enemyHit=false;
+        }
+
+        /*
         if (mode == 's') {
             //std::getline(std::cin, text);
+            //socket.send(packetKilledAliens);
             socket.send(packetWEnemies);
             mode = 'r';
         } else if (mode == 'r') {
             socket.receive(packetWEnemies);
+            //socket.receive(packetKilledAliens);
             mode = 's';
         }
+         */
 
         for (auto &bullet: alienBullets) {
             for (int i = 0; i < enemies.size(); i++) {
@@ -273,6 +300,8 @@ int main() {
         }
 
 
+
+
         for (Alien &alien: enemies) {
             window.draw(alien.getSprite());
         }
@@ -316,9 +345,12 @@ int main() {
             return 1;
         }
 
-        int pocetEnem;
 
+
+
+        //packetKilledAliens >> posHitEnemy;
         packetWEnemies >> pocetEnem;
+
         zivotyString = "Pocet zivotov: ";
         zivotyString += std::to_string(hrac.getZivoty());
         pocetEnemiesString = "Enemies: ";
