@@ -10,6 +10,7 @@ p::Player::Player() {
     m_player.setTexture(m_texture);
     this->m_rychlostHraca = 3.5f;
     this->m_pocetZivotov = 3;
+    this->playerOne = false;
 }
 
 p::Player::~Player() {
@@ -69,6 +70,14 @@ void p::Player::skontrolujPoziciu(int& sirkaObrazovky, int& vyskaObrazovky) {
         this->m_player.setPosition(0, this->m_player.getPosition().y);
     }
 
+}
+
+void p::Player::setPlayer(bool playerNum) {
+    this->playerOne = playerNum;
+}
+
+bool p::Player::isPlayerOne() {
+    return  this->playerOne;
 }
 
 

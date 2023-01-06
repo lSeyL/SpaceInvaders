@@ -20,6 +20,7 @@ private:
     sf::Sprite m_player;
     float m_rychlostHraca;
     int m_pocetZivotov;
+    bool playerOne;
 public:
 
 private:
@@ -41,10 +42,12 @@ public:
     float getRychlostHraca() const;
     sf::Sprite getSprite() const;
     int getZivoty();
+    bool isPlayerOne();
 
     // Settery
     void nastavPoziciu(int& x, int& y);
     void nastavZivoty(int pocet);
+    void setPlayer(bool isPlayerOne);
 
 
 };

@@ -31,7 +31,6 @@ int main() {
     std::cin >> player;
 
 
-
     sf::IpAddress ipAddress = sf::IpAddress::getLocalAddress();
     sf::TcpSocket socket;
     char buffer[1024];
@@ -47,12 +46,10 @@ int main() {
         sf::TcpListener listener;
         listener.listen(51000);
         listener.accept(socket);
-        pocetHracov++;
         mode = 's';
     } else if (connectionType == 'c') {
         socket.connect(ipAddress, 51000);
         mode = 'r';
-        pocetHracov++;
     } else {
         std::cerr << "Error" << std::endl;
         return 1;
@@ -100,12 +97,20 @@ int main() {
     textureShot.loadFromFile("../Resources/shot.png");
     std::vector<p::Player> players;
 
-    p::Player* hrac1 = new p::Player;
-    players.push_back(&hrac1);
+    p::Player hrac1;
+    p::Player hrac2;
 
-    for (p::Player& player : players) {
-        player.nastavPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+    hrac1.setPlayer(true);
+    hrac2.setPlayer(false);
+
+    std::cout << hrac1.isPlayerOne();
+    std::cout << hrac2.isPlayerOne();
+
+    for(p::Player& hrac: players) {
+        hrac.nastavPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
     }
+    //hrac1.nastavPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
+
 
     sf::Clock clock;
     std::chrono::time_point<std::chrono::steady_clock> lastShotTime = std::chrono::steady_clock::now();
@@ -150,13 +155,11 @@ int main() {
         }
 
 
-
-
         float elapsedTime = clock.restart().asSeconds();
         auto currentTime = std::chrono::steady_clock::now();
 
         //Ovladanie
-        if(player == 0) {
+        if (hrac1.isPlayerOne()) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 hrac1.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
                 hrac1.pohybVlavo();
@@ -172,7 +175,7 @@ int main() {
                     lastShotTime = currentTime;
                 }
             }
-        } else {
+        } else if(!hrac2.isPlayerOne()) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
                 hrac1.skontrolujPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
                 hrac1.pohybVlavo();
@@ -189,7 +192,6 @@ int main() {
                 }
             }
         }
-
 
 
         for (auto &bullet: bullets) {
@@ -262,15 +264,13 @@ int main() {
         bool hit;
         packetNumOfEnemies >> pocetEnem >> pos >> hit;
 
-        if(hit)
-        {
+        if (hit) {
             //int posHitEnemy;
             enemies.erase(enemies.begin() + pos);
-            hit=false;
+            hit = false;
         }
         for (int i = 0; i < enemies.size(); ++i) {
-            if(!enemies[i].isAlive())
-            {
+            if (!enemies[i].isAlive()) {
                 enemies.erase(enemies.begin() + i);
             }
         }
@@ -318,8 +318,6 @@ int main() {
             }
 
         }
-
-
 
 
         for (Alien &alien: enemies) {
