@@ -103,27 +103,32 @@ int main() {
     std::vector<Bullet> bullets;
     std::vector<Bullet> alienBullets;
     std::vector<Alien> enemies;
-    std::vector<Alien> deadEnemies;
+    //std::vector<Alien> deadEnemies;
+
+
     int enemyDirection = 1;
     bool reachedPlayer = false;
 
     int pocetRad = 10;
     int pocetStlpec = 3;
-
+    //Alien aliens[pocetRad][pocetStlpec];
+    std::vector<std::vector<Alien>> aliens(pocetRad, std::vector<Alien>(pocetStlpec));
     bool alienNazive[pocetRad][pocetStlpec];
     for (int i = 0; i < pocetRad; ++i) {
         for (int j = 0; j < pocetStlpec; ++j) {
             //Sirka ikonky je 51px
             //10 je medzera
             //768 - 510 = 258, 258 - 10 * 10 = 158 / 2 = 79
-            alienNazive[i][j] = true;
+            //lienNazive[i][j] = true;
             int offsetX = 79;
             int offsetY = 50;
             int medzera = 10;
-            Alien alien(textureAlien);
-            alien.setPosition(offsetX, offsetY, medzera, i, j);
-            enemies.push_back(alien);
+            //Alien alien(textureAlien);
+            //Alien.setPosition(offsetX, offsetY, medzera, i, j);
+            //enemies.push_back(alien);
             //std::cout << alienNazive[i][j] << std::endl;
+
+            aliens[i][j] = Alien(textureAlien);
         }
     }
 
@@ -205,8 +210,8 @@ int main() {
                     posHitEnemy = i;
                     Alien hitAlien = enemies[i];
                     hitAlien.setAliveState(false);
-                    deadEnemies.push_back(hitAlien);
-                    std::cout << "Alien dead size: " << deadEnemies.size() << std::endl;
+                    //deadEnemies.push_back(hitAlien);
+                    //std::cout << "Alien dead size: " << deadEnemies.size() << std::endl;
                     //enemies.erase(enemies.begin() + i);
                     bullet = bullets.back();
                     bullets.pop_back();
@@ -238,7 +243,7 @@ int main() {
         if(enemyHit)
         {
             packetKilledAliens >> posHitEnemy;
-            enemies.erase(enemies.begin() + posHitEnemy);
+            //enemies.erase(enemies.begin() + posHitEnemy);
             enemyHit=false;
         }
 
@@ -317,7 +322,7 @@ int main() {
             std::cout << "Vyhra!";
             bullets.clear();
             alienBullets.clear();
-            deadEnemies.clear();
+            //deadEnemies.clear();
             enemies.clear();
 
             return 0;
@@ -327,7 +332,7 @@ int main() {
                 reachedPlayer = true;
                 bullets.clear();
                 alienBullets.clear();
-                deadEnemies.clear();
+                //deadEnemies.clear();
                 enemies.clear();
                 std::cout << "Prehra\n";
                 std::cout << "Nepriatelia dosli na koniec obrazovky.\n";
@@ -340,7 +345,7 @@ int main() {
             std::cout << "Stratil si vsetky zivoty.\n";
             bullets.clear();
             alienBullets.clear();
-            deadEnemies.clear();
+            //deadEnemies.clear();
             enemies.clear();
             return 1;
         }

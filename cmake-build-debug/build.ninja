@@ -81,6 +81,14 @@ build CMakeFiles/SpaceInvaders.dir/Classes/Bullet.cpp.obj: CXX_COMPILER__SpaceIn
   OBJECT_DIR = CMakeFiles\SpaceInvaders.dir
   OBJECT_FILE_DIR = CMakeFiles\SpaceInvaders.dir\Classes
 
+build CMakeFiles/SpaceInvaders.dir/Classes/AlienArmy.cpp.obj: CXX_COMPILER__SpaceInvaders_Debug C$:/Users/seil0/CLionProjects/SpaceInvaders/Classes/AlienArmy.cpp || cmake_object_order_depends_target_SpaceInvaders
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\SpaceInvaders.dir\Classes\AlienArmy.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -isystem C:/SFML/include
+  OBJECT_DIR = CMakeFiles\SpaceInvaders.dir
+  OBJECT_FILE_DIR = CMakeFiles\SpaceInvaders.dir\Classes
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target SpaceInvaders
@@ -89,7 +97,7 @@ build CMakeFiles/SpaceInvaders.dir/Classes/Bullet.cpp.obj: CXX_COMPILER__SpaceIn
 #############################################
 # Link the executable SpaceInvaders.exe
 
-build SpaceInvaders.exe: CXX_EXECUTABLE_LINKER__SpaceInvaders_Debug CMakeFiles/SpaceInvaders.dir/main.cpp.obj CMakeFiles/SpaceInvaders.dir/Classes/Player.cpp.obj CMakeFiles/SpaceInvaders.dir/Classes/Alien.cpp.obj CMakeFiles/SpaceInvaders.dir/Classes/Bullet.cpp.obj | C$:/SFML/lib/libsfml-system-s-d.a C$:/SFML/lib/libsfml-window-s-d.a C$:/SFML/lib/libsfml-graphics-s-d.a C$:/SFML/lib/libsfml-audio-s-d.a C$:/SFML/lib/libsfml-network-s-d.a C$:/SFML/lib/libsfml-window-s-d.a C$:/SFML/lib/libfreetype.a C$:/SFML/lib/libopenal32.a C$:/SFML/lib/libvorbisfile.a C$:/SFML/lib/libvorbisenc.a C$:/SFML/lib/libvorbis.a C$:/SFML/lib/libogg.a C$:/SFML/lib/libFLAC.a C$:/SFML/lib/libsfml-system-s-d.a
+build SpaceInvaders.exe: CXX_EXECUTABLE_LINKER__SpaceInvaders_Debug CMakeFiles/SpaceInvaders.dir/main.cpp.obj CMakeFiles/SpaceInvaders.dir/Classes/Player.cpp.obj CMakeFiles/SpaceInvaders.dir/Classes/Alien.cpp.obj CMakeFiles/SpaceInvaders.dir/Classes/Bullet.cpp.obj CMakeFiles/SpaceInvaders.dir/Classes/AlienArmy.cpp.obj | C$:/SFML/lib/libsfml-system-s-d.a C$:/SFML/lib/libsfml-window-s-d.a C$:/SFML/lib/libsfml-graphics-s-d.a C$:/SFML/lib/libsfml-audio-s-d.a C$:/SFML/lib/libsfml-network-s-d.a C$:/SFML/lib/libsfml-window-s-d.a C$:/SFML/lib/libfreetype.a C$:/SFML/lib/libopenal32.a C$:/SFML/lib/libvorbisfile.a C$:/SFML/lib/libvorbisenc.a C$:/SFML/lib/libvorbis.a C$:/SFML/lib/libogg.a C$:/SFML/lib/libFLAC.a C$:/SFML/lib/libsfml-system-s-d.a
   FLAGS = -g
   LINK_LIBRARIES = C:/SFML/lib/libsfml-system-s-d.a  C:/SFML/lib/libsfml-window-s-d.a  C:/SFML/lib/libsfml-graphics-s-d.a  C:/SFML/lib/libsfml-audio-s-d.a  C:/SFML/lib/libsfml-network-s-d.a  C:/SFML/lib/libsfml-window-s-d.a  -lgdi32  -lOpenGL32  C:/SFML/lib/libfreetype.a  C:/SFML/lib/libopenal32.a  C:/SFML/lib/libvorbisfile.a  C:/SFML/lib/libvorbisenc.a  C:/SFML/lib/libvorbis.a  C:/SFML/lib/libogg.a  C:/SFML/lib/libFLAC.a  C:/SFML/lib/libsfml-system-s-d.a  -lwinmm  -lws2_32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\SpaceInvaders.dir
