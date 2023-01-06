@@ -6,10 +6,11 @@
 
 #include "Text.h"
 
-Text::Text(const std::string& str, const sf::Font& font, unsigned int characterSize, sf::Color color, bool bold)
+Text::Text(const std::string& str, float positionX, float positionY, const sf::Font& font, unsigned int characterSize, sf::Color color, bool bold)
 {
     m_text.setString(str);
     m_text.setFont(font);
+    m_text.setPosition(positionX, positionY);
     m_text.setCharacterSize(characterSize);
     m_text.setFillColor(color);
     m_text.setStyle(bold ? sf::Text::Bold : sf::Text::Regular);
