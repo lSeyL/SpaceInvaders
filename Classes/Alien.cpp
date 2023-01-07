@@ -9,8 +9,8 @@ Alien::Alien() {
 }
 
 Alien::Alien(sf::Texture &tex) {
-    alien.setTexture(tex);
-    alive = true;
+    m_alienSp.setTexture(tex);
+    m_alive = true;
 }
 
 Alien::~Alien() {
@@ -36,8 +36,8 @@ void Alien::zmazNepriatela(std::vector<Bullet> bullets, std::vector<Sprite> enem
  */
 
 void Alien::setPosition(int X, int Y, int medzera, int i, int j) {
-    alien.setPosition(X + (alien.getLocalBounds().width + medzera) * i,
-                      Y + (alien.getLocalBounds().height + medzera) * j);
+    m_alienSp.setPosition(X + (m_alienSp.getLocalBounds().width + medzera) * i,
+                      Y + (m_alienSp.getLocalBounds().height + medzera) * j);
 }
 
 /*
@@ -46,48 +46,48 @@ void Alien::setEnemiesVector(std::vector<Alien> *enemy) {
 }
  */
 
-void Alien::createEnemySprite() {
-    textureAlien.loadFromFile(textureAlienFile);
-    alien.setTexture(textureAlien);
+void Alien::createTex() {
+    m_textureAlien.loadFromFile(m_textureAlienFile);
+    m_alienSp.setTexture(m_textureAlien);
 }
 
 sf::Sprite Alien::getSprite() const {
-    return this->alien;
+    return this->m_alienSp;
 }
 
 sf::FloatRect Alien::getGlobalBounds() {
-    return this->alien.getGlobalBounds();
+    return this->m_alienSp.getGlobalBounds();
 }
 
 sf::Vector2f &Alien::getPosition() {
-    return const_cast<sf::Vector2f &>(this->alien.getPosition());
+    return const_cast<sf::Vector2f &>(this->m_alienSp.getPosition());
 }
 
 void Alien::pohyb(float offsetX, float offsetY) {
-    this->alien.move(offsetX, offsetY);
+    this->m_alienSp.move(offsetX, offsetY);
 }
 
 sf::FloatRect Alien::getLocalBounds() {
-    return this->alien.getLocalBounds();
+    return this->m_alienSp.getLocalBounds();
 }
 
 void Alien::vystrel(sf::Texture &tex, std::vector<Bullet> &alienBullets) {
     Bullet bullet(tex);
-    bullet.setPosition(this->alien.getPosition().x + 25, this->alien.getPosition().y + 25);
+    bullet.setPosition(this->m_alienSp.getPosition().x + 25, this->m_alienSp.getPosition().y + 25);
     alienBullets.push_back(bullet);
 
 }
 
 bool Alien::isAlive() {
-    return this->alive;
+    return this->m_alive;
 }
 
 void Alien::setAliveState(bool setLive) {
-    this->alive = setLive;
+    this->m_alive = setLive;
 }
 
 void Alien::setScale(float x, float y) {
-    this->alien.setScale(x,y);
+    this->m_alienSp.setScale(x,y);
 }
 
 

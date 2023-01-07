@@ -15,21 +15,22 @@
 
 class Alien{
 private:
-    std::string textureAlienFile;
-    sf::Sprite alien;
-    sf::Texture textureAlien;
-    bool alive;
+    std::string m_textureAlienFile;
+    sf::Sprite m_alienSp;
+    sf::Texture m_textureAlien;
+    bool m_alive;
+    int m_hp;
 public:
     Alien();
     explicit Alien(sf::Texture& tex);
     ~Alien();
-    sf::Sprite getAlienSprite() {return alien;};
-    sf::Texture getAlien() {return textureAlien;};
+    sf::Sprite getAlienSprite() {return m_alienSp;};
+    sf::Texture getAlienTexture() {return m_textureAlien;};
     //std::vector<sf::Sprite> getEnemiesZoznam() {return enemies;};
     //void zmazNepriatela(std::vector<Bullet> bullets, std::vector<Sprite> enemies, bool checkCollision(sf::FloatRect rect, sf::FloatRect rect1));
     void setPosition(int X, int Y, int medzera, int i, int j);
     //void setEnemiesVector(std::vector<Alien> *enemy);
-    void createEnemySprite();
+    void createTex();
     void pohyb(float offsetX, float offsetY);
     sf::Sprite getSprite() const;
     sf::FloatRect getGlobalBounds();

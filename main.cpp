@@ -6,14 +6,20 @@
 #include "Classes/Bullet.h"
 #include "Classes/Player.h"
 #include "Classes/Alien.h"
+#include "Classes/AlienArmy.h"
 
+
+// 4:3
 const int SIRKA_OBRAZOVKY = 768;
 const int VYSKA_OBRAZOVKY = 672;
-const int CAS_MEDZI_STRELAMI = 500;
+
+const int CAS_MEDZI_STRELAMI = 750;
+
 const float ALIEN_POSUN = 250.f;
-const float ALIEN_POSUN_DOLE = 10.f;
+const float ALIEN_POSUN_DOLE = 6.f;
+
 float zrychlenie = 0.1f;
-// 4:3
+
 
 bool checkCollision(sf::FloatRect rect, sf::FloatRect rect1);
 
@@ -142,10 +148,6 @@ int main() {
     hrac.setPlayer(true);
     druhyHrac.setPlayer(false);
 
-    std::cout << hrac.isPlayerOne();
-    std::cout << druhyHrac.isPlayerOne();
-
-
     hrac.nastavStartovnuPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
     druhyHrac.nastavStartovnuPoziciu(const_cast<int &>(SIRKA_OBRAZOVKY), const_cast<int &>(VYSKA_OBRAZOVKY));
 
@@ -189,14 +191,14 @@ int main() {
         }
     }
 
-
-
     while (window.isOpen()) {
         sf::Event event{};
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+
         float elapsedTime = clock.restart().asSeconds();
         auto currentTime = std::chrono::steady_clock::now();
 
@@ -234,8 +236,8 @@ int main() {
                 }
             }
         } else {
-            std::cerr << "Error! Failed to select player controls.";
-            std::cout << "Error! Failed to select player controls.";
+            std::cerr << "Error! Failed to select player controls." << std::endl;
+            std::cout << "Error! Failed to select player controls." << std::endl;
         }
 
 
