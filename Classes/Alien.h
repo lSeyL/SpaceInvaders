@@ -15,7 +15,7 @@
 
 class Alien{
 private:
-    std::string textureAlienFile = "../Resources/alien.png";
+    std::string textureAlienFile;
     sf::Sprite alien;
     sf::Texture textureAlien;
     bool alive;
@@ -38,6 +38,7 @@ public:
     void vystrel(sf::Texture& tex, std::vector<Bullet> &alienBullets);
     bool isAlive();
     void setAliveState(bool setLive);
+    void setScale(float x, float y);
 
 
 };

@@ -5,9 +5,8 @@
 #include "Player.h"
 
 
-p::Player::Player() {
-    m_texture.loadFromFile(m_textureFile);
-    m_player.setTexture(m_texture);
+p::Player::Player(sf::Texture& texture) {
+    m_player.setTexture(texture);
     this->m_rychlostHraca = 3.5f;
     this->m_pocetZivotov = 3;
     this->playerOne = false;
@@ -42,7 +41,7 @@ float p::Player::getRychlostHraca() const {
     return this->m_rychlostHraca;
 }
 
-void p::Player::nastavPoziciu(int& sirkaObrazovky, int& vyskaObrazovky) {
+void p::Player::nastavStartovnuPoziciu(int& sirkaObrazovky, int& vyskaObrazovky) {
     this->m_player.setPosition(sirkaObrazovky / 2 - 25, vyskaObrazovky - this->m_player.getLocalBounds().height);
 }
 
@@ -78,6 +77,10 @@ void p::Player::setPlayer(bool playerNum) {
 
 bool p::Player::isPlayerOne() {
     return  this->playerOne;
+}
+
+void p::Player::nastavPozicu(float a, float b) {
+    this->m_player.setPosition(a,b);
 }
 
 

@@ -8,8 +8,7 @@
 Alien::Alien() {
 }
 
-Alien::Alien(sf::Texture& tex) {
-    tex.loadFromFile(textureAlienFile);
+Alien::Alien(sf::Texture &tex) {
     alien.setTexture(tex);
     alive = true;
 }
@@ -17,6 +16,7 @@ Alien::Alien(sf::Texture& tex) {
 Alien::~Alien() {
 
 }
+
 /*
 void Alien::zmazNepriatela(std::vector<Bullet> bullets, std::vector<Sprite> enemies, bool checkCollision(sf::FloatRect rect, sf::FloatRect rect1)) {
 
@@ -37,7 +37,7 @@ void Alien::zmazNepriatela(std::vector<Bullet> bullets, std::vector<Sprite> enem
 
 void Alien::setPosition(int X, int Y, int medzera, int i, int j) {
     alien.setPosition(X + (alien.getLocalBounds().width + medzera) * i,
-                      Y  + (alien.getLocalBounds().height + medzera) * j);
+                      Y + (alien.getLocalBounds().height + medzera) * j);
 }
 
 /*
@@ -64,20 +64,18 @@ sf::Vector2f &Alien::getPosition() {
 }
 
 void Alien::pohyb(float offsetX, float offsetY) {
-    this->alien.move(offsetX,offsetY);
+    this->alien.move(offsetX, offsetY);
 }
 
 sf::FloatRect Alien::getLocalBounds() {
     return this->alien.getLocalBounds();
 }
 
-void Alien::vystrel(sf::Texture& tex, std::vector<Bullet> &alienBullets) {
-    if( (rand() % 1000) < 1)
-    {
-        Bullet bullet(tex);
-        bullet.setPosition(this->alien.getPosition().x, this->alien.getPosition().y);
-        alienBullets.push_back(bullet);
-    }
+void Alien::vystrel(sf::Texture &tex, std::vector<Bullet> &alienBullets) {
+    Bullet bullet(tex);
+    bullet.setPosition(this->alien.getPosition().x + 25, this->alien.getPosition().y + 25);
+    alienBullets.push_back(bullet);
+
 }
 
 bool Alien::isAlive() {
@@ -86,6 +84,10 @@ bool Alien::isAlive() {
 
 void Alien::setAliveState(bool setLive) {
     this->alive = setLive;
+}
+
+void Alien::setScale(float x, float y) {
+    this->alien.setScale(x,y);
 }
 
 

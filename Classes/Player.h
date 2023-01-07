@@ -15,8 +15,8 @@ namespace p {
 class Player
 {
 private:
-    std::string m_textureFile = "../Resources/player.png";
-    sf::Texture m_texture;
+   // std::string m_textureFile;
+    //sf::Texture m_texture;
     sf::Sprite m_player;
     float m_rychlostHraca;
     int m_pocetZivotov;
@@ -26,7 +26,7 @@ public:
 private:
 
 public:
-    Player();  // Konštruktor
+    Player(sf::Texture& texture);  // Konštruktor
     ~Player(); // Deštruktor
 
     void skontrolujPoziciu(int& sirkaObrazovky, int& vyskaObrazovky);
@@ -45,7 +45,8 @@ public:
     bool isPlayerOne();
 
     // Settery
-    void nastavPoziciu(int& x, int& y);
+    void nastavStartovnuPoziciu(int& x, int& y);
+    void nastavPozicu(float x, float y);
     void nastavZivoty(int pocet);
     void setPlayer(bool isPlayerOne);
 
