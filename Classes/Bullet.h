@@ -1,5 +1,5 @@
 //
-// Created by seil0 on 4. 1. 2023.
+// Created by Richen7 on 4. 1. 2023.
 //
 #ifndef SPACEINVADERS_BULLET_H
 #define SPACEINVADERS_BULLET_H
