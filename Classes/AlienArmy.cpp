@@ -12,7 +12,7 @@ AlienArmy::~AlienArmy() {
 
 }
 
-void AlienArmy::vytvorArmadu(int rad, int stlpec, std::vector<Alien> enemies, sf::Texture& t1, sf::Texture& t2, sf::Texture& t3) {
+void AlienArmy::vytvorArmadu(int rad, int stlpec, std::vector<Alien>& enemies, sf::Texture& t1, sf::Texture& t2, sf::Texture& t3) {
     int pocetRad = rad;
     int pocetStlpec = stlpec;
 

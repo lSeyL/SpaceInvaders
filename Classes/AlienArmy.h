@@ -15,7 +15,7 @@ private:
 public:
     AlienArmy();
     ~AlienArmy();
-    void vytvorArmadu(int rad, int stlpec, std::vector<Alien> enemies, sf::Texture& t1, sf::Texture& t2, sf::Texture& t3);
+    void vytvorArmadu(int rad, int stlpec, std::vector<Alien>& enemies, sf::Texture& t1, sf::Texture& t2, sf::Texture& t3);
 
 private:
 
